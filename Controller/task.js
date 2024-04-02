@@ -28,6 +28,7 @@ export const getTask = async (req, res) => {
         if(!task){
             return res.status(404).json( 'no data found');
         }
+
         res.status(200).json(task);
     } catch (error) {
         console.log(error)
@@ -50,6 +51,26 @@ export const deleteTask = async (req, res) => {
         
 
 
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// set complted , 
+
+export const setComplet = async (req, res) => {
+    try {
+        const id = req.params.id
+        const  updatetask = await TaskModel.findById(id)
+        if(!updatetask){
+            return res.status(404).json({erroe:"no task found"})
+        }else {
+         updatetask.status = true
+        res.status(201).json(await updatetask.save())
+        //res.send(`/tasks/${updatetask._id}`)
+        
+
+        }
     } catch (error) {
         console.log(error)
     }
